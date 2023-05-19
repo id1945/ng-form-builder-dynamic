@@ -1,27 +1,70 @@
-# NgFormBuilderDynamic
+```html
+<ng-container [formGroup]="formGroup">
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
+	<!-- X -->
+	<div formArrayName="formArray1">
+		<div *ngFor="let X of f.formArray1['controls']; let ix=index">
+			<div [formGroupName]="ix" class="formArray1">
 
-## Development server
+				<input type="text" formControlName="X">
+				<div *ngIf="X['controls'].X?.touched">
+					<p *ngIf="X['controls'].X?.errors?.required">X is required</p>
+					<p *ngIf="X['controls'].X?.errors?.pattern">Error pattern {{X['controls'].X?.errors?.pattern.requiredPattern}}</p>
+				</div>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+				<!-- Y -->
+				<div formArrayName="formArray2">
+					<div *ngFor="let Y of X['controls'].formArray2['controls']; let iy=index">
+						<div [formGroupName]="iy" class="formArray2">
+							
+							<input type="text" formControlName="Y1">
+							<div *ngIf="Y['controls'].Y1?.touched">
+								<p *ngIf="Y['controls'].Y1?.errors?.required">Y1 is required</p>
+								<p *ngIf="Y['controls'].Y1?.errors?.pattern">Error pattern {{Y['controls'].Y1?.errors?.pattern.requiredPattern}}</p>
+							</div>
+							
+							<br />
 
-## Code scaffolding
+							<input type="text" formControlName="Y2">
+							<div *ngIf="Y['controls'].Y2?.touched">
+								<p *ngIf="Y['controls'].Y2?.errors?.required">Y2 is required</p>
+								<p *ngIf="Y['controls'].Y2?.errors?.pattern">Error pattern {{Y['controls'].Y2?.errors?.pattern.requiredPattern}}</p>
+							</div>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+							<!-- Z -->
+							<div formArrayName="formArray3">
+								<div *ngFor="let Z of Y['controls'].formArray3['controls']; let iz=index">
+									<div [formGroupName]="iz" class="formArray3">
 
-## Build
+										<input type="text" formControlName="Z">
+										<div *ngIf="Z['controls'].Z?.touched">
+											<p *ngIf="Z['controls'].Z?.errors?.required">Z is required</p>
+											<p *ngIf="Z['controls'].Z?.errors?.pattern">Error pattern {{Z['controls'].Z?.errors?.pattern.requiredPattern}}</p>
+										</div>
+										
+										<br />
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+										<input type="button" (click)="onRemoveZ(ix,iy,Z)" value="Delete Z">
+										<input type="button" (click)="onRemoveZIndex(ix,iy,iz)" value="Delete Z Index">
+									</div>
+								</div>
+								<input type="button" (click)="addZ(ix,iy)" value="Add Z">
+							</div>
+							<!-- Z End -->
 
-## Running unit tests
+						</div>
+					</div>
+					<input type="button" (click)="addY(ix)" value="Add Y">
+				</div>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+				<!-- Y End-->
+			</div>
+		</div>
+		<input type="button" (click)="addX()" value="Add X">
+	</div>
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+	<!-- X End -->
+	<button type="submit" (click)="onSubmit(formGroup)">SUBMIT</button>
+	<button type="button" (click)="onUpdate()">Update Z</button>
+<ng-container>
+```
