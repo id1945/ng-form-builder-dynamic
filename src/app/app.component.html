@@ -1,0 +1,84 @@
+<ng-container [formGroup]="formGroup">
+
+	<!-- X -->
+	<div formArrayName="formArray1">
+		<div *ngFor="let X of f.formArray1['controls']; let ix=index">
+			<div [formGroupName]="ix" class="formArray1">
+
+				<input type="text" formControlName="X">
+				<div *ngIf="X['controls'].X?.touched">
+					<p *ngIf="X['controls'].X?.errors?.required">X is required</p>
+					<p *ngIf="X['controls'].X?.errors?.pattern">Error pattern {{X['controls'].X?.errors?.pattern.requiredPattern}}</p>
+				</div>
+
+				<!-- Y -->
+				<div formArrayName="formArray2">
+					<div *ngFor="let Y of X['controls'].formArray2['controls']; let iy=index">
+						<div [formGroupName]="iy" class="formArray2">
+							
+							<input type="text" formControlName="Y1">
+							<div *ngIf="Y['controls'].Y1?.touched">
+								<p *ngIf="Y['controls'].Y1?.errors?.required">Y1 is required</p>
+								<p *ngIf="Y['controls'].Y1?.errors?.pattern">Error pattern {{Y['controls'].Y1?.errors?.pattern.requiredPattern}}</p>
+							</div>
+							
+							<br />
+
+							<input type="text" formControlName="Y2">
+							<div *ngIf="Y['controls'].Y2?.touched">
+								<p *ngIf="Y['controls'].Y2?.errors?.required">Y2 is required</p>
+								<p *ngIf="Y['controls'].Y2?.errors?.pattern">Error pattern {{Y['controls'].Y2?.errors?.pattern.requiredPattern}}</p>
+							</div>
+
+							<!-- Z -->
+							<div formArrayName="formArray3">
+								<div *ngFor="let Z of Y['controls'].formArray3['controls']; let iz=index">
+									<div [formGroupName]="iz" class="formArray3">
+
+										<input type="text" formControlName="Z">
+										<div *ngIf="Z['controls'].Z?.touched">
+											<p *ngIf="Z['controls'].Z?.errors?.required">Z is required</p>
+											<p *ngIf="Z['controls'].Z?.errors?.pattern">Error pattern {{Z['controls'].Z?.errors?.pattern.requiredPattern}}</p>
+										</div>
+										
+										<br />
+
+										<input type="button" (click)="onRemoveZ(ix,iy,Z)" value="Delete Z">
+										<input type="button" (click)="onRemoveZIndex(ix,iy,iz)" value="Delete Z Index">
+									</div>
+								</div>
+								<input type="button" (click)="addZ(ix,iy)" value="Add Z">
+							</div>
+							<!-- Z End -->
+
+						</div>
+					</div>
+					<input type="button" (click)="addY(ix)" value="Add Y">
+				</div>
+
+				<!-- Y End-->
+			</div>
+		</div>
+		<input type="button" (click)="addX()" value="Add X">
+	</div>
+
+	<!-- X End -->
+	<button type="submit" (click)="onSubmit(formGroup)">SUBMIT</button>
+	<button type="button" (click)="onUpdate()">Update Z</button>
+<ng-container>
+
+
+<h5>Field Values</h5>
+<pre style="font-size:12px">{{ formGroup.value | json }}</pre>
+
+<!-- <h5>Chú ý phần này: Sẽ bị lỗi nếu xoá mất data</h5>
+<pre>
+{{f.formArray1['controls'][0]['controls'].X.value | json}}
+{{f.formArray1['controls'][0]['controls'].formArray2['controls'][0]['controls'].Y1.value | json}}
+{{f.formArray1['controls'][0]['controls'].formArray2['controls'][0]['controls'].formArray3['controls'][0]['controls'].Z.value | json}}
+</pre> -->
+
+<h2>Author: DaiDH</h2>
+
+<br>
+Refer: <a href="https://stackblitz.com/edit/angular-form-group-form-array-dynamic">Bassic example</a>
